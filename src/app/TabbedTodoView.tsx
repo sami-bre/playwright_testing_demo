@@ -32,6 +32,7 @@ export default function TabbedTodoView({ allTodos }: TabbedTodoViewProps) {
             onClick={() => setActiveTab('active')}
             className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'active' ? activeTabStyles : inactiveTabStyles}`}
             aria-current={activeTab === 'active' ? 'page' : undefined}
+            data-testid="active-todos-tab"
           >
             Active Todos ({activeTodos.length})
           </button>
@@ -39,6 +40,7 @@ export default function TabbedTodoView({ allTodos }: TabbedTodoViewProps) {
             onClick={() => setActiveTab('archived')}
             className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'archived' ? activeTabStyles : inactiveTabStyles}`}
             aria-current={activeTab === 'archived' ? 'page' : undefined}
+            data-testid="archived-todos-tab"
           >
             Archived ({archivedTodos.length})
           </button>
@@ -46,7 +48,7 @@ export default function TabbedTodoView({ allTodos }: TabbedTodoViewProps) {
       </div>
 
       {/* Tab Content */}
-      <div>
+      <div data-testid="tab-content">
         {activeTab === 'active' && <TodoListClient initialTodos={activeTodos} />}
         {activeTab === 'archived' && <ArchivedTodoList archivedTodos={archivedTodos} />}
       </div>

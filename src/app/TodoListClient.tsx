@@ -56,6 +56,7 @@ function SortableItem({ todo, isDragging }: SortableItemProps) {
       {...attributes}
       suppressHydrationWarning={true}
       className={`flex items-center justify-between p-4 mb-2 bg-white rounded shadow ${todo.completed ? 'opacity-60' : ''}`}
+      data-testid={`todo-item-${todo.id}`}
     >
       <div className="flex items-center flex-grow min-w-0 mr-2">
         <button {...listeners} className="cursor-move mr-3 p-1 text-gray-400 hover:text-gray-600 focus:outline-none flex-shrink-0">
@@ -69,6 +70,7 @@ function SortableItem({ todo, isDragging }: SortableItemProps) {
           onChange={handleToggle}
           className="mr-3 h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 flex-shrink-0"
           aria-label={`Mark ${todo.text} as complete`}
+          data-testid={`todo-item-checkbox-${todo.id}`}
         />
         <span className={`flex-1 truncate ${todo.completed ? 'line-through text-gray-500' : 'text-gray-800'}`}>
           {todo.text}
@@ -80,6 +82,7 @@ function SortableItem({ todo, isDragging }: SortableItemProps) {
             onClick={handleArchive}
             className="text-green-600 hover:text-green-800 focus:outline-none p-1 rounded hover:bg-green-100 mr-2"
             aria-label={`Archive ${todo.text}`}
+            data-testid={`todo-item-archive-button-${todo.id}`}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
@@ -90,6 +93,7 @@ function SortableItem({ todo, isDragging }: SortableItemProps) {
           onClick={handleDelete}
           className="text-red-500 hover:text-red-700 focus:outline-none p-1 rounded hover:bg-red-100"
           aria-label={`Delete ${todo.text}`}
+          data-testid={`todo-item-delete-button-${todo.id}`}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -163,12 +167,12 @@ export default function TodoListClient({ initialTodos }: TodoListClientProps) {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <h2 className="text-xl font-semibold mt-6 mb-3 text-gray-700">To Do</h2>
+      <h2 className="text-xl font-semibold mt-6 mb-3 text-gray-700" data-testid="incomplete-todos-heading">To Do</h2>
       {incompleteTodos.length === 0 ? (
-          <p className="text-gray-500 italic">Nothing to do!</p>
+          <p className="text-gray-500 italic" data-testid="no-incomplete-todos-message">Nothing to do!</p>
       ) : (
         <SortableContext items={incompleteTodos.map(todo => todo.id)} strategy={verticalListSortingStrategy}>
-            <ul className="mb-6">
+            <ul className="mb-6" data-testid="incomplete-todo-list">
             {incompleteTodos.map((todo) => (
                 <SortableItem key={todo.id} todo={todo} isDragging={activeId === todo.id} />
             ))}
@@ -176,12 +180,12 @@ export default function TodoListClient({ initialTodos }: TodoListClientProps) {
         </SortableContext>
       )}
 
-      <h2 className="text-xl font-semibold mt-6 mb-3 text-gray-700">Completed</h2>
+      <h2 className="text-xl font-semibold mt-6 mb-3 text-gray-700" data-testid="completed-todos-heading">Completed</h2>
       {completedTodos.length === 0 ? (
-          <p className="text-gray-500 italic">No completed items yet.</p>
+          <p className="text-gray-500 italic" data-testid="no-completed-todos-message">No completed items yet.</p>
       ) : (
         <SortableContext items={completedTodos.map(todo => todo.id)} strategy={verticalListSortingStrategy}>
-            <ul className="mt-4">
+            <ul className="mt-4" data-testid="completed-todo-list">
             {completedTodos.map((todo) => (
                 <SortableItem key={todo.id} todo={todo} isDragging={activeId === todo.id} />
             ))}

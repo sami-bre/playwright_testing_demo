@@ -44,3 +44,10 @@ next-env.d.ts
 *.sqlite
 *.sqlite3
 *.db
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
