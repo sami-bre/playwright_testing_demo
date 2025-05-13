@@ -11,7 +11,7 @@ This is a simple Todo application built with Next.js, featuring end-to-end tests
 
 1.  **Clone the repository:**
     ```bash
-    git clone <your-repository-url>
+    git clone https://github.com/sami-bre/playwright_testing_demo.git
     cd playwright_lab
     ```
 
